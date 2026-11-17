@@ -6,14 +6,14 @@ export function BrandMark({ className }: { className?: string }) {
   return (
     <Link
       href="/"
-      className={cn("group inline-flex items-center gap-1.5 text-[15px] font-semibold tracking-[0.18em]", className)}
+      className={cn("group inline-flex items-baseline gap-1 font-display text-lg font-semibold tracking-tight", className)}
       aria-label={`${profile.name} — home`}
     >
-      <span>{profile.brand.left}</span>
-      <span className="text-accent-strong transition-transform duration-300 group-hover:rotate-12" aria-hidden="true">
+      <span>Viet</span>
+      <span className="text-signal transition-transform duration-300 group-hover:rotate-12" aria-hidden="true">
         /
       </span>
-      <span className="text-fg-muted transition-colors group-hover:text-fg">{profile.brand.right}</span>
+      <span className="text-ink-2 transition-colors group-hover:text-ink">builds</span>
     </Link>
   );
 }

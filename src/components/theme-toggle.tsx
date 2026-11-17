@@ -31,7 +31,7 @@ export function ThemeToggle() {
       onClick={toggle}
       aria-label={label}
       title={label}
-      className="inline-flex size-10 items-center justify-center rounded-full text-fg-muted transition-colors hover:bg-bg-muted hover:text-fg"
+      className="inline-flex size-10 items-center justify-center rounded-full text-ink-2 transition-colors hover:bg-tile-2 hover:text-ink"
     >
       {/* Render both icons and swap with CSS to avoid a hydration flash */}
       <Sun className="hidden size-[18px] dark:block" aria-hidden="true" />

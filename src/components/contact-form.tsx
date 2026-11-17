@@ -28,7 +28,7 @@ export function ContactForm() {
         ref={statusRef}
         tabIndex={-1}
         role="status"
-        className="flex items-start gap-3 rounded-2xl border border-emerald-500/30 bg-emerald-500/10 p-6 text-fg"
+        className="flex items-start gap-3 rounded-2xl border border-emerald-500/30 bg-emerald-500/10 p-6 text-ink"
       >
         <CircleCheck className="mt-0.5 size-5 shrink-0 text-emerald-600 dark:text-emerald-400" aria-hidden="true" />
         <p>{state.message}</p>
@@ -125,9 +125,9 @@ export function ContactForm() {
 
 function inputClass(invalid: boolean) {
   return cn(
-    "block w-full rounded-xl border bg-bg px-4 py-3 text-[15px] text-fg placeholder:text-fg-subtle transition-colors",
-    "focus:border-accent-strong focus:outline-none focus:ring-2 focus:ring-accent-strong/25",
-    invalid ? "border-red-500/70" : "border-line",
+    "block w-full rounded-2xl border bg-page px-4 py-3.5 text-[15px] text-ink placeholder:text-ink-3 transition-colors",
+    "focus:border-signal focus:outline-none focus:ring-2 focus:ring-signal/25",
+    invalid ? "border-red-500/70" : "border-hair",
   );
 }
 
@@ -156,7 +156,7 @@ function Field({
     <div>
       <label htmlFor={name} className="mb-2 block text-sm font-medium">
         {label}
-        {optional ? <span className="ml-1.5 font-normal text-fg-subtle">(optional)</span> : null}
+        {optional ? <span className="ml-1.5 font-normal text-ink-3">(optional)</span> : null}
       </label>
       <input
         id={name}

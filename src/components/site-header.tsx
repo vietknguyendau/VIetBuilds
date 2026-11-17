@@ -9,28 +9,20 @@ import { ThemeToggle } from "./theme-toggle";
 import { cn } from "@/lib/utils";
 
 const nav = [
-  { label: "About", hash: "about" },
   { label: "Projects", hash: "projects" },
+  { label: "About", hash: "about" },
   { label: "Approach", hash: "approach" },
   { label: "Experience", hash: "experience" },
 ];
 
+/** Floating pill navigation. Frosted glass is reserved for this bar only. */
 export function SiteHeader() {
   const pathname = usePathname();
   const [open, setOpen] = useState(false);
-  const [scrolled, setScrolled] = useState(false);
   const menuButton = useRef<HTMLButtonElement>(null);
   const isHome = pathname === "/";
   const href = (hash: string) => (isHome ? `#${hash}` : `/#${hash}`);
 
-  useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 8);
-    onScroll();
-    window.addEventListener("scroll", onScroll, { passive: true });
-    return () => window.removeEventListener("scroll", onScroll);
-  }, []);
-
-  // Close the menu on route change, and on Escape (returning focus to the button).
   useEffect(() => setOpen(false), [pathname]);
   useEffect(() => {
     if (!open) return;
@@ -49,29 +41,27 @@ export function SiteHeader() {
   }, [open]);
 
   return (
-    <header
-      className={cn(
-        "sticky top-0 z-50 transition-[background-color,border-color,backdrop-filter] duration-300",
-        scrolled || open
-          ? "border-b border-line bg-bg/85 backdrop-blur-md"
-          : "border-b border-transparent bg-transparent",
-      )}
-    >
+    <header className="sticky top-0 z-50 mx-auto max-w-[1240px] px-3 pt-3 sm:px-5">
       <a
         href="#main"
-        className="sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-3 focus:z-50 focus:rounded-md focus:bg-bg-elevated focus:px-4 focus:py-2 focus:text-sm focus:shadow"
+        className="sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-4 focus:z-50 focus:rounded-full focus:bg-signal-fill focus:px-4 focus:py-2 focus:text-sm focus:font-semibold focus:text-on-signal"
       >
         Skip to content
       </a>
-      <div className="mx-auto flex h-16 max-w-6xl items-center justify-between px-5 sm:px-8">
+      <div
+        className={cn(
+          "flex h-14 items-center justify-between rounded-full border border-hair/70 bg-tile/75 pl-5 pr-2 shadow-[0_10px_30px_-18px_rgba(10,24,29,0.6)] backdrop-blur-xl",
+          open && "rounded-b-none rounded-t-[1.75rem]",
+        )}
+      >
         <BrandMark />
 
-        <nav aria-label="Primary" className="hidden items-center gap-1 md:flex">
+        <nav aria-label="Primary" className="hidden items-center gap-0.5 md:flex">
           {nav.map((item) => (
             <a
               key={item.hash}
               href={href(item.hash)}
-              className="rounded-full px-3.5 py-2 text-sm text-fg-muted transition-colors hover:text-fg"
+              className="rounded-full px-3.5 py-2 text-[0.9375rem] text-ink-2 transition-colors hover:bg-tile-2 hover:text-ink"
             >
               {item.label}
             </a>
@@ -79,9 +69,9 @@ export function SiteHeader() {
           <ThemeToggle />
           <a
             href={href("contact")}
-            className="ml-2 rounded-full bg-fg px-4 py-2 text-sm font-medium text-bg transition-opacity hover:opacity-90"
+            className="ml-1 rounded-full bg-signal-fill px-4 py-2 text-[0.9375rem] font-semibold text-on-signal transition-[filter] hover:brightness-105"
           >
-            Let&apos;s Connect
+            Let&apos;s connect
           </a>
         </nav>
 
@@ -94,7 +84,7 @@ export function SiteHeader() {
             aria-expanded={open}
             aria-controls="mobile-nav"
             aria-label={open ? "Close menu" : "Open menu"}
-            className="inline-flex size-10 items-center justify-center rounded-full text-fg hover:bg-bg-muted"
+            className="inline-flex size-10 items-center justify-center rounded-full text-ink hover:bg-tile-2"
           >
             {open ? <X className="size-5" aria-hidden="true" /> : <Menu className="size-5" aria-hidden="true" />}
           </button>
@@ -104,7 +94,7 @@ export function SiteHeader() {
       <div
         id="mobile-nav"
         hidden={!open}
-        className="h-[calc(100dvh-4rem)] border-t border-line bg-bg px-5 pb-10 pt-6 md:hidden"
+        className="h-[calc(100dvh-5rem)] rounded-b-[1.75rem] border border-t-0 border-hair/70 bg-tile px-5 pb-10 pt-2 md:hidden"
       >
         <nav aria-label="Mobile" className="flex flex-col">
           {[...nav, { label: "Contact", hash: "contact" }].map((item) => (
@@ -112,12 +102,12 @@ export function SiteHeader() {
               key={item.hash}
               href={href(item.hash)}
               onClick={() => setOpen(false)}
-              className="border-b border-line py-4 text-2xl font-medium tracking-tight"
+              className="border-b border-hair py-4 font-display text-3xl font-semibold tracking-tight"
             >
               {item.label}
             </Link>
           ))}
-          <Link href="/projects" onClick={() => setOpen(false)} className="py-4 text-2xl font-medium tracking-tight">
+          <Link href="/projects" onClick={() => setOpen(false)} className="py-4 font-display text-3xl font-semibold tracking-tight text-ink-2">
             All projects
           </Link>
         </nav>

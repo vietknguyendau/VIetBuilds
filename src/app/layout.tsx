@@ -1,7 +1,6 @@
 import type { Metadata, Viewport } from "next";
-import { GeistSans } from "geist/font/sans";
-import { GeistMono } from "geist/font/mono";
-import { RevealObserver } from "@/components/reveal-observer";
+import "@fontsource-variable/bricolage-grotesque/standard.css";
+import "@fontsource-variable/instrument-sans";
 import { SiteFooter } from "@/components/site-footer";
 import { SiteHeader } from "@/components/site-header";
 import { profile, siteConfig } from "@/content/profile";
@@ -39,13 +38,13 @@ export const metadata: Metadata = {
 
 export const viewport: Viewport = {
   themeColor: [
-    { media: "(prefers-color-scheme: light)", color: "#f8fafc" },
-    { media: "(prefers-color-scheme: dark)", color: "#101d30" },
+    { color: "#12271b" },
   ],
 };
 
-// Runs before paint: applies saved/OS theme (no flash) and flags that JS is available for scroll reveals.
-const themeScript = `(function(){try{var d=document.documentElement;d.classList.add('js');var t=localStorage.getItem('theme');if(t==='dark'||(!t&&window.matchMedia('(prefers-color-scheme: dark)').matches))d.classList.add('dark')}catch(e){}})()`;
+// Runs before paint so a saved theme applies without a flash.
+// Dark is the signature look; visitors can switch to light and it's remembered.
+const themeScript = `(function(){try{if(localStorage.getItem('theme')==='light')document.documentElement.classList.remove('dark')}catch(e){}})()`;
 
 const personJsonLd = {
   "@context": "https://schema.org",
@@ -60,7 +59,7 @@ const personJsonLd = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en" className={`${GeistSans.variable} ${GeistMono.variable}`} suppressHydrationWarning>
+    <html lang="en" className="dark" suppressHydrationWarning>
       <head>
         <script dangerouslySetInnerHTML={{ __html: themeScript }} />
         <script
@@ -74,7 +73,6 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           {children}
         </main>
         <SiteFooter />
-        <RevealObserver />
       </body>
     </html>
   );

@@ -8,7 +8,7 @@ import { Todo } from "./ui";
 export function SocialLinks({ className, showResume = false }: { className?: string; showResume?: boolean }) {
   const { linkedin, github, resume } = profile.links;
   const iconLink =
-    "inline-flex size-11 items-center justify-center rounded-full border border-line bg-bg-elevated text-fg-muted transition-all hover:-translate-y-0.5 hover:border-accent-strong hover:text-fg";
+    "inline-flex size-11 items-center justify-center rounded-full border border-hair text-ink-2 transition-colors hover:border-signal hover:text-ink";
 
   return (
     <div className={cn("flex flex-wrap items-center gap-3", className)}>
@@ -28,7 +28,7 @@ export function SocialLinks({ className, showResume = false }: { className?: str
         <a
           href={resume}
           download
-          className="inline-flex h-11 items-center gap-2 rounded-full border border-line bg-bg-elevated px-4 text-sm font-medium text-fg-muted transition-all hover:-translate-y-0.5 hover:border-accent-strong hover:text-fg"
+          className="inline-flex h-11 items-center gap-2 rounded-full border border-hair px-4 text-sm font-medium text-ink-2 transition-colors hover:border-signal hover:text-ink"
         >
           <Download className="size-4" aria-hidden="true" /> Résumé
         </a>

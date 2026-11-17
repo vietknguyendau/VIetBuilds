@@ -159,23 +159,25 @@ Never prefix a secret with `NEXT_PUBLIC_`, because that exposes it to the browse
 
 ---
 
-## Design system
+## Design system: "Bento Studio"
 
-Colors are defined in `src/app/globals.css`:
+The whole page is built from **bento tiles**: modular panels whose size shows importance. Colors and tokens live in `src/app/globals.css`.
 
 | Token | Value | Use |
 |---|---|---|
-| `navy-900` | `#101D30` | Deep navy: dark background, primary text in light mode |
-| `navy-700` | `#1F3A56` | Secondary navy |
-| `gold-500` | `#C9A24D` | Accent (used sparingly) |
-| `paper` | `#F8FAFC` | Off-white |
-| `fg-muted` | slate | Secondary text |
+| `spruce-900` | `#12271B` | Forest green page background (dark, the default look) |
+| `spruce-800` | `#1A3524` | Tile surface |
+| `frost` | `#EEF0E4` | Birch: main text on dark |
+| `mist` | `#A3B5A2` | Lichen: secondary text |
+| `amber-400` | `#F2B33D` | Marigold signal accent: buttons, the compass needle, the philosophy tile |
+| `moss` | `#C5DD8F` | Fresh green accent for Health & Wellness projects |
 
-Semantic tokens (`bg`, `fg`, `fg-muted`, `line`, `accent`) switch automatically between light and dark mode. In light mode, gold *text* uses a darker shade (`#86682C`) so it passes contrast requirements.
-
-Animations use CSS only. Turning on "reduce motion" in the OS disables them completely.
-
----
+- **Type:** Bricolage Grotesque for headings, Instrument Sans for body text. Both are self-hosted through Fontsource, so there are no third-party font requests.
+- **Tiles:** `<Tile>` in `src/components/ui.tsx` comes in four tones (`tile`, `deep`, `signal`, `outline`) and three sizes. Bigger tiles get rounder corners.
+- **Signature:** the TrueNorth compass (`src/components/compass.tsx`). Its needle follows the visitor's pointer and drifts back to north.
+- **Motion:** one load moment (the hero headline settles in, and the hero tiles fade up). Nothing animates on scroll. With "reduce motion" turned on, there's no animation at all.
+- **Theme:** dark by default. The toggle switches to light mode and remembers the choice.
+- **Project art:** until you add screenshots, each project uses its icon as large cropped artwork. Leagues are tinted marigold and health projects moss green. Once you add a screenshot, it replaces the icon automatically.
 
 ## Deployment
 

@@ -17,24 +17,24 @@ export default function OpengraphImage() {
           flexDirection: "column",
           justifyContent: "space-between",
           padding: "72px 80px",
-          background: "linear-gradient(135deg, #101D30 0%, #1F3A56 100%)",
-          color: "#F8FAFC",
+          background: "#12271B",
+          color: "#EEF0E4",
         }}
       >
-        <div style={{ display: "flex", fontSize: 28, letterSpacing: 6, fontWeight: 700 }}>
-          <span>VIET</span>
-          <span style={{ color: "#C9A24D", margin: "0 14px" }}>/</span>
-          <span style={{ color: "#B4C0CF" }}>BUILDS</span>
+        <div style={{ display: "flex", fontSize: 28, letterSpacing: -0.5, fontWeight: 700 }}>
+          <span>Viet</span>
+          <span style={{ color: "#F2B33D", margin: "0 14px" }}>/</span>
+          <span style={{ color: "#A3B5A2" }}>builds</span>
         </div>
         <div style={{ display: "flex", flexDirection: "column" }}>
           <div style={{ fontSize: 76, fontWeight: 700, lineHeight: 1.05, letterSpacing: -2, maxWidth: 960 }}>
             {profile.headline}
           </div>
-          <div style={{ marginTop: 28, height: 4, width: 120, background: "#C9A24D", borderRadius: 4 }} />
+          <div style={{ marginTop: 28, height: 4, width: 120, background: "#F2B33D", borderRadius: 4 }} />
         </div>
-        <div style={{ display: "flex", justifyContent: "space-between", fontSize: 26, color: "#B4C0CF" }}>
+        <div style={{ display: "flex", justifyContent: "space-between", fontSize: 26, color: "#A3B5A2" }}>
           <span>{profile.name}</span>
-          <span>Business · Creativity · AI-assisted development</span>
+          <span>Business experience, built into software</span>
         </div>
       </div>
     ),
