@@ -1,4 +1,5 @@
 import { MapPin } from "lucide-react";
+import Image from "next/image";
 import Link from "next/link";
 import { profile } from "@/content/profile";
 import { Compass } from "../compass";
@@ -38,23 +39,45 @@ export function Hero() {
             </div>
           </Tile>
 
-          {/* Profile */}
-          <Tile className="flex flex-col justify-between gap-8 sm:col-span-3 lg:col-span-4" animate index={1}>
-            <div className="flex items-start justify-between gap-4">
-              <Headshot size={84} />
-              <SocialLinks />
-            </div>
-            <div>
-              <p className="font-display text-2xl font-semibold tracking-tight">{profile.name}</p>
-              <p className="mt-1.5 flex items-center gap-1.5 text-ink-2">
-                <MapPin className="size-4 text-signal" aria-hidden="true" />
-                {profile.location}
-              </p>
-              <p className="mt-4 text-[0.9375rem] leading-relaxed text-ink-2">
-                Entrepreneur, business development professional, and AI-assisted application builder.
-              </p>
-            </div>
-          </Tile>
+          {/* Profile photo */}
+          {profile.headshot.portrait ? (
+            <Tile as="figure" className="min-h-[420px] p-0 sm:col-span-3 sm:p-0 lg:col-span-4 lg:min-h-[380px]" animate index={1}>
+              <Image
+                src={profile.headshot.portrait}
+                alt={profile.headshot.alt}
+                fill
+                priority
+                sizes="(min-width: 1024px) 400px, (min-width: 640px) 50vw, 100vw"
+                className="object-cover object-[50%_22%]"
+              />
+              <figcaption className="absolute inset-x-3 bottom-3 flex items-end justify-between gap-3 rounded-tile-sm bg-spruce-900/80 px-5 py-4 text-frost backdrop-blur-md">
+                <div>
+                  <p className="font-display text-xl font-semibold tracking-tight">{profile.name}</p>
+                  <p className="mt-0.5 flex items-center gap-1.5 text-sm text-mist">
+                    <MapPin className="size-3.5 text-amber-400" aria-hidden="true" />
+                    {profile.location}
+                  </p>
+                </div>
+                <div className="[--hair:rgba(255,255,255,0.18)] [--ink-2:#d3dccf] [--ink:#ffffff]">
+                  <SocialLinks />
+                </div>
+              </figcaption>
+            </Tile>
+          ) : (
+            <Tile className="flex flex-col justify-between gap-8 sm:col-span-3 lg:col-span-4" animate index={1}>
+              <div className="flex items-start justify-between gap-4">
+                <Headshot size={84} />
+                <SocialLinks />
+              </div>
+              <div>
+                <p className="font-display text-2xl font-semibold tracking-tight">{profile.name}</p>
+                <p className="mt-1.5 flex items-center gap-1.5 text-ink-2">
+                  <MapPin className="size-4 text-signal" aria-hidden="true" />
+                  {profile.location}
+                </p>
+              </div>
+            </Tile>
+          )}
 
           {/* TrueNorth compass — the signature tile */}
           <Tile tone="deep" className="group flex items-center gap-6 sm:col-span-3 lg:col-span-4" animate index={2}>
