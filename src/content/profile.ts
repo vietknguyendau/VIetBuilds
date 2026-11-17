@@ -42,10 +42,15 @@ export const profile = {
     truenorth: "https://truenorthcmmn.com",
   },
 
-  /** Headshot: place a square image at /public/images/headshot/viet.jpg and set the path. */
+  /**
+   * Headshot images in /public/images/headshot/.
+   * `portrait` (4:5) fills the hero photo tile; `src` (square) is used for small avatars.
+   * Leave either "" to fall back to the "VN" monogram.
+   */
   headshot: {
-    src: "",
-    alt: "Portrait of Viet Nguyen-Dau",
+    portrait: "/images/headshot/viet.jpg",
+    src: "/images/headshot/viet-square.jpg",
+    alt: "Viet Nguyen-Dau smiling, wearing a dark green blazer and white shirt",
   },
 } as const;
 
