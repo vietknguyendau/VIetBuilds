@@ -104,7 +104,7 @@ export function Hero() {
           </Tile>
 
           {/* For business owners */}
-          <Tile tone="outline" className="flex flex-col justify-between gap-5 sm:col-span-6 lg:col-span-5" animate index={4}>
+          <Tile tone="cream" className="flex flex-col justify-between gap-5 sm:col-span-6 lg:col-span-5" animate index={4}>
             <div>
               <TileLabel>For business owners</TileLabel>
               <p className="mt-2 font-display text-xl font-semibold leading-snug text-balance">

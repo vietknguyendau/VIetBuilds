@@ -32,7 +32,7 @@ export function Contact() {
             </div>
           </div>
         </Tile>
-        <Tile size="lg" className="sm:col-span-6 lg:col-span-7 lg:p-12">
+        <Tile size="lg" tone="cream" className="sm:col-span-6 lg:col-span-7 lg:p-12">
           <TileHeading id="contact-form-title" title={<span className="text-2xl sm:text-[1.75rem]">Send a message</span>} />
           <div className="mt-7">
             <ContactForm />

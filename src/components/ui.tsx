@@ -32,13 +32,15 @@ export function Bento({ className, children, as: Tag = "div" }: { className?: st
   return <Tag className={cn("grid grid-cols-1 gap-3 sm:grid-cols-6 sm:gap-4 lg:grid-cols-12", className)}>{children}</Tag>;
 }
 
-type Tone = "tile" | "deep" | "signal" | "outline";
+type Tone = "tile" | "deep" | "signal" | "outline" | "cream";
 
 const tones: Record<Tone, string> = {
   tile: "bg-tile text-ink",
   deep: "bg-spruce-950 text-frost dark:bg-spruce-950",
   signal: "bg-signal-fill text-on-signal",
   outline: "border border-hair bg-transparent text-ink",
+  /** Warm bone tile. Resets the text tokens locally so anything inside reads dark-on-cream in either theme. */
+  cream: "tone-cream bg-cream text-ink",
 };
 
 /**

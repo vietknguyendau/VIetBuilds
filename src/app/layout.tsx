@@ -52,6 +52,7 @@ const personJsonLd = {
   name: profile.name,
   url: siteConfig.url,
   jobTitle: "Entrepreneur & AI-Assisted Application Builder",
+  image: `${siteConfig.url}/images/headshot/viet-square.jpg`,
   address: { "@type": "PostalAddress", addressLocality: "Minneapolis", addressRegion: "MN", addressCountry: "US" },
   worksFor: { "@type": "Organization", name: "TrueNorth Community Management", url: profile.links.truenorth },
   sameAs: [profile.links.linkedin, profile.links.github].filter(Boolean),

@@ -25,6 +25,7 @@
   --color-amber-600: #b97a0e;
   --color-amber-700: #8a5a06;
   --color-moss: #c5dd8f;
+  --color-cream: #f5f3ee; /* warm bone: the editorial contrast tile */
 
   --font-sans: "Instrument Sans Variable", ui-sans-serif, system-ui, sans-serif;
   --font-display: "Bricolage Grotesque Variable", "Instrument Sans Variable", ui-sans-serif, sans-serif;
@@ -130,6 +131,19 @@
 }
 
 /* Hero load moment: the headline settles from light to heavy, line by line. Plays once. */
+/* Cream tiles keep forest-green text in both light and dark mode. */
+.tone-cream {
+  --page: #fbfaf7;
+  --tile-2: #ebe7dd;
+  --ink: #12271b;
+  --ink-2: #4a5d4f;
+  --ink-3: #5c6e5f;
+  --hair: #dcd6c9;
+  --signal: #8a5a06;
+  --ring: #8a5a06;
+  --grain-opacity: 0.05;
+}
+
 @keyframes settle {
   from {
     opacity: 0;
