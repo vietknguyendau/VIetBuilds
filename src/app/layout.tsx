@@ -1,7 +1,9 @@
 import type { Metadata, Viewport } from "next";
 import "@fontsource-variable/bricolage-grotesque/standard.css";
 import "@fontsource-variable/instrument-sans";
+import { MotionEffects } from "@/components/motion-effects";
 import { SiteFooter } from "@/components/site-footer";
+import { ViewTransitions } from "next-view-transitions";
 import { SiteHeader } from "@/components/site-header";
 import { profile, siteConfig } from "@/content/profile";
 import "./globals.css";
@@ -60,6 +62,7 @@ const personJsonLd = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
+    <ViewTransitions>
     <html lang="en" className="dark" suppressHydrationWarning>
       <head>
         <script dangerouslySetInnerHTML={{ __html: themeScript }} />
@@ -74,7 +77,9 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           {children}
         </main>
         <SiteFooter />
+        <MotionEffects />
       </body>
     </html>
+    </ViewTransitions>
   );
 }

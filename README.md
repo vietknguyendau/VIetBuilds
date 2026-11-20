@@ -175,7 +175,14 @@ The whole page is built from **bento tiles**: modular panels whose size shows im
 - **Type:** Bricolage Grotesque for headings, Instrument Sans for body text. Both are self-hosted through Fontsource, so there are no third-party font requests.
 - **Tiles:** `<Tile>` in `src/components/ui.tsx` comes in four tones (`tile`, `deep`, `signal`, `outline`) and three sizes. Bigger tiles get rounder corners.
 - **Signature:** the TrueNorth compass (`src/components/compass.tsx`). Its needle follows the visitor's pointer and drifts back to north.
-- **Motion:** one load moment (the hero headline settles in, and the hero tiles fade up). Nothing animates on scroll. With "reduce motion" turned on, there's no animation at all.
+- **Motion** (everything switches off when the visitor's device is set to "reduce motion"):
+  - **Page morphs:** clicking a project card morphs it into its case-study page. This uses the View Transitions API through `next-view-transitions`, plus the shared names in `src/lib/view-transition.ts`.
+  - **Filter glide:** project tiles slide to their new positions when you filter.
+  - **Theme reveal:** switching between light and dark mode spreads out in a circle from the toggle button (`theme-toggle.tsx`).
+  - **Scroll reveals:** tiles rise into place as they scroll into view, and a marigold progress bar runs across the top. Both are pure CSS scroll-driven animations; browsers without support simply show everything.
+  - **Spotlight:** a soft glow follows the cursor across tiles (`motion-effects.tsx`). Mouse and trackpad only.
+  - **Hero:** the headline settles in once when the page loads.
+  - **No dead ends:** browsers without View Transitions still work normally, just without the animation.
 - **Theme:** dark by default. The toggle switches to light mode and remembers the choice.
 - **Project art:** until you add screenshots, each project uses its icon as large cropped artwork. Leagues are tinted marigold and health projects moss green. Once you add a screenshot, it replaces the icon automatically.
 

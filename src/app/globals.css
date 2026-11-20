@@ -181,6 +181,161 @@
   animation-delay: calc(var(--i, 0) * 90ms + 250ms);
 }
 
+/* =================================================================
+   Motion
+   ================================================================= */
+
+/* --- Pointer spotlight on tiles (driven by components/motion-effects.tsx) --- */
+.spotlight::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  pointer-events: none;
+  z-index: -1;
+  opacity: 0;
+  transition: opacity 0.35s ease;
+  background: radial-gradient(
+    420px circle at var(--mx, 50%) var(--my, 50%),
+    color-mix(in srgb, var(--color-amber-400) 13%, transparent),
+    transparent 45%
+  );
+}
+.spotlight.is-lit::before {
+  opacity: 1;
+}
+.tone-cream.spotlight::before {
+  background: radial-gradient(
+    420px circle at var(--mx, 50%) var(--my, 50%),
+    color-mix(in srgb, var(--color-amber-400) 22%, transparent),
+    transparent 45%
+  );
+}
+
+/* --- Scroll-driven reveals and reading progress (CSS only; skipped where unsupported) --- */
+.scroll-progress {
+  display: none;
+}
+@supports (animation-timeline: view()) {
+  @media (prefers-reduced-motion: no-preference) {
+    .scroll-rise {
+      animation: rise linear both;
+      animation-timeline: view();
+      animation-range: entry 0% entry 60%;
+    }
+    .scroll-progress {
+      display: block;
+      position: fixed;
+      inset: 0 0 auto 0;
+      height: 3px;
+      z-index: 60;
+      transform-origin: 0 50%;
+      background: linear-gradient(90deg, var(--color-amber-400), var(--color-amber-300));
+      animation: grow-x linear both;
+      animation-timeline: scroll(root);
+    }
+  }
+}
+@keyframes rise {
+  from {
+    opacity: 0;
+    transform: translateY(56px) scale(0.965);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+@keyframes grow-x {
+  from {
+    transform: scaleX(0);
+  }
+  to {
+    transform: scaleX(1);
+  }
+}
+
+/* --- View transitions: page morphs, filter reflow, theme reveal --- */
+::view-transition-group(*) {
+  animation-duration: 0.6s;
+  animation-timing-function: cubic-bezier(0.22, 1, 0.36, 1);
+}
+::view-transition-old(root) {
+  animation: vt-out 0.3s cubic-bezier(0.4, 0, 1, 1) both;
+}
+::view-transition-new(root) {
+  animation: vt-in 0.5s cubic-bezier(0.22, 1, 0.36, 1) 0.08s both;
+}
+/* The floating nav stays put while pages change underneath it. */
+::view-transition-group(site-header) {
+  animation: none;
+}
+/* Theme toggle: the JS clip-path animation replaces the default crossfade. */
+html.theme-vt::view-transition-old(root),
+html.theme-vt::view-transition-new(root) {
+  animation: none;
+  mix-blend-mode: normal;
+}
+html.theme-vt::view-transition-group(*) {
+  animation-duration: 0s;
+}
+/* Filtering: the page holds still; only the project tiles glide to their new spots. */
+html.filter-vt::view-transition-old(root),
+html.filter-vt::view-transition-new(root),
+html.filter-vt::view-transition-group(site-header) {
+  animation: none;
+}
+html.filter-vt {
+  --vt-title-name: none;
+}
+html.filter-vt::view-transition-group(*) {
+  animation-duration: 0.5s;
+}
+/* Resizing cards show their new content right away (no double-exposure)... */
+html.filter-vt::view-transition-old(*) {
+  animation: vt-fade-out 0.1s linear both;
+}
+html.filter-vt::view-transition-new(*) {
+  animation: none;
+}
+/* ...cards leaving the grid fade out quickly; cards arriving fade in once there's room. */
+html.filter-vt::view-transition-old(*):only-child {
+  animation: vt-fade-out 0.18s ease-out both;
+}
+html.filter-vt::view-transition-new(*):only-child {
+  animation: vt-fade-in 0.3s ease-out 0.15s both;
+}
+/* Titles: a quick swap mid-flight instead of a long double-exposure. */
+::view-transition-old(*.vt-title) {
+  animation: vt-fade-out 0.2s ease-out both;
+}
+::view-transition-new(*.vt-title) {
+  animation: vt-fade-in 0.3s ease-out 0.12s both;
+}
+@keyframes vt-fade-out {
+  to {
+    opacity: 0;
+  }
+}
+@keyframes vt-fade-in {
+  from {
+    opacity: 0;
+  }
+}
+@keyframes vt-out {
+  to {
+    opacity: 0;
+    transform: scale(0.985);
+    filter: blur(4px);
+  }
+}
+@keyframes vt-in {
+  from {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   html {
     scroll-behavior: auto;
@@ -191,5 +346,10 @@
     animation-duration: 0.01ms !important;
     animation-delay: 0ms !important;
     transition-duration: 0.01ms !important;
+  }
+  ::view-transition-group(*),
+  ::view-transition-old(*),
+  ::view-transition-new(*) {
+    animation: none !important;
   }
 }

@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import Image from "next/image";
-import Link from "next/link";
+import { Link } from "next-view-transitions";
 import { notFound } from "next/navigation";
 import { ArrowLeft, ArrowUpRight, Lock } from "lucide-react";
 import type { ReactNode } from "react";
@@ -9,6 +9,7 @@ import { ProjectVisual } from "@/components/project-visual";
 import { Bento, ButtonLink, Container, Tile, Todo } from "@/components/ui";
 import { getProject, projects } from "@/content/projects";
 import { isPublicUrl } from "@/lib/utils";
+import { vtName, vtTitleStyle } from "@/lib/view-transition";
 
 type Params = { slug: string };
 
@@ -47,13 +48,19 @@ export default async function ProjectPage({ params }: { params: Promise<Params> 
       <Container>
         <Bento>
           {/* Title tile */}
-          <Tile size="lg" className="flex min-h-[420px] flex-col justify-between gap-10 sm:col-span-6 lg:col-span-8 lg:row-span-2 lg:p-12" animate index={0}>
+          <Tile
+            size="lg"
+            className="flex min-h-[420px] flex-col justify-between gap-10 sm:col-span-6 lg:col-span-8 lg:row-span-2 lg:p-12"
+            style={{ viewTransitionName: vtName("project", project.slug) }}
+          >
             <Link href="/projects" className="group inline-flex items-center gap-2 self-start text-[0.9375rem] text-ink-2 hover:text-ink">
               <ArrowLeft className="size-4 transition-transform group-hover:-translate-x-0.5" aria-hidden="true" /> All projects
             </Link>
             <div>
               <p className="text-ink-3">{project.category}</p>
-              <h1 className="mt-3 text-[clamp(2.6rem,6vw,4.75rem)] font-semibold leading-[1] tracking-[-0.025em] text-balance">
+              <h1
+                style={vtTitleStyle(project.slug)}
+                className="mt-3 w-fit text-[clamp(2.6rem,6vw,4.75rem)] font-semibold leading-[1] tracking-[-0.025em] text-balance">
                 {project.title}
               </h1>
               <p className="mt-6 max-w-[48ch] text-lg leading-relaxed text-ink-2 text-pretty">{project.tagline}</p>
@@ -177,7 +184,7 @@ export default async function ProjectPage({ params }: { params: Promise<Params> 
         {/* Next */}
         <Link
           href={`/projects/${next.slug}`}
-          className="grain group relative mt-16 flex flex-col gap-2 overflow-hidden rounded-tile-lg bg-tile p-8 transition-colors hover:bg-tile-2 sm:mt-24 sm:p-12"
+          className="grain spotlight group relative mt-16 flex flex-col gap-2 overflow-hidden rounded-tile-lg bg-tile p-8 transition-colors hover:bg-tile-2 sm:mt-24 sm:p-12"
         >
           <span className="text-ink-3">Next project</span>
           <span className="font-display text-[clamp(2rem,5vw,3.5rem)] font-semibold leading-none tracking-[-0.03em] transition-colors group-hover:text-signal">

@@ -1,4 +1,4 @@
-import Link from "next/link";
+import { Link } from "next-view-transitions";
 import type { ComponentProps, CSSProperties, ReactNode } from "react";
 import { cn, isDev } from "@/lib/utils";
 
@@ -70,7 +70,7 @@ export function Tile({
   const radius = size === "lg" ? "rounded-tile-lg" : size === "sm" ? "rounded-tile-sm" : "rounded-tile";
   return (
     <Tag
-      className={cn("grain relative overflow-hidden p-6 sm:p-8", radius, tones[tone], animate && "tile-in", className)}
+      className={cn("grain spotlight relative overflow-hidden p-6 sm:p-8", radius, tones[tone], animate ? "tile-in" : "scroll-rise", className)}
       style={{ ...(index !== undefined ? ({ "--i": index } as CSSProperties) : null), ...style }}
     >
       {children}
@@ -130,6 +130,14 @@ export function ButtonLink({
   ...rest
 }: { href: string; variant?: Variant; external?: boolean } & Omit<ComponentProps<"a">, "href">) {
   const cls = cn(variant === "ghost" ? "inline-flex items-center gap-1.5 text-[0.9375rem] font-medium transition-colors" : base, variants[variant], className);
+  // In-page anchors stay plain links so smooth scrolling works.
+  if (href.startsWith("#")) {
+    return (
+      <a href={href} className={cls} {...rest}>
+        {children}
+      </a>
+    );
+  }
   if (external || href.startsWith("http") || href.endsWith(".pdf")) {
     return (
       <a href={href} className={cls} target="_blank" rel="noopener noreferrer" {...rest}>

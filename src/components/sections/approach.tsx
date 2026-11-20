@@ -13,7 +13,7 @@ export function Approach() {
         {approach.map(({ step, body }, i) => (
           <li
             key={step}
-            className="grain relative flex min-h-[220px] flex-col gap-8 overflow-hidden rounded-tile bg-tile p-6 sm:p-7 last:sm:col-span-2 last:lg:col-span-1"
+            className="grain spotlight scroll-rise relative flex min-h-[220px] flex-col gap-8 overflow-hidden rounded-tile bg-tile p-6 sm:p-7 last:sm:col-span-2 last:lg:col-span-1"
           >
             {/* the steps are a true sequence, so they're numbered */}
             <span className="font-display text-[4.5rem] font-semibold leading-none tracking-tight text-signal/35" aria-hidden="true">

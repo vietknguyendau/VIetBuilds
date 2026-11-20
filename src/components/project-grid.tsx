@@ -1,10 +1,13 @@
 "use client";
 
-import Link from "next/link";
+import { Link } from "next-view-transitions";
 import { useState } from "react";
+import { flushSync } from "react-dom";
+import { withViewTransition } from "@/lib/view-transition";
 import type { Project, ProjectCategory } from "@/content/types";
 import { cn } from "@/lib/utils";
 import { ProjectVisual } from "./project-visual";
+import { vtName, vtTitleStyle } from "@/lib/view-transition";
 
 type Filter = "All" | ProjectCategory;
 
@@ -42,7 +45,7 @@ export function ProjectGrid({ projects, categories }: { projects: Project[]; cat
               key={f}
               type="button"
               aria-pressed={active}
-              onClick={() => setFilter(f)}
+              onClick={() => withViewTransition(() => flushSync(() => setFilter(f)), "filter-vt")}
               className={cn(
                 "rounded-full px-4 py-2 text-[0.9375rem] font-medium transition-colors",
                 active ? "bg-ink text-page" : "bg-tile-2 text-ink-2 hover:text-ink",
@@ -60,7 +63,7 @@ export function ProjectGrid({ projects, categories }: { projects: Project[]; cat
 
       <ul className="mt-4 grid grid-cols-1 gap-3 sm:grid-cols-6 sm:gap-4 lg:auto-rows-[minmax(250px,auto)] lg:grid-cols-12">
         {visible.map((p, i) => (
-          <li key={p.slug} className={spans[i % spans.length]}>
+          <li key={p.slug} className={cn("scroll-rise", spans[i % spans.length])}>
             <ProjectTile project={p} hero={i === 0 && visible.length >= 3} />
           </li>
         ))}
@@ -74,9 +77,11 @@ function ProjectTile({ project, hero }: { project: Project; hero: boolean }) {
   return (
     <article
       className={cn(
-        "grain group relative flex h-full min-h-[320px] flex-col sm:min-h-[260px] overflow-hidden bg-tile p-6 transition-[background-color] duration-300 hover:bg-tile-2 sm:p-8",
+        "grain spotlight group relative flex h-full min-h-[320px] flex-col sm:min-h-[260px] overflow-hidden bg-tile p-6 transition-[background-color] duration-300 hover:bg-tile-2 sm:p-8",
         hero ? "rounded-tile-lg lg:min-h-[520px]" : "rounded-tile",
       )}
+      // Shared names let this tile morph into the case-study page (and between filter layouts).
+      style={{ viewTransitionName: vtName("project", project.slug) }}
     >
       <ProjectVisual
         project={project}
@@ -93,7 +98,9 @@ function ProjectTile({ project, hero }: { project: Project; hero: boolean }) {
           {project.category}
           {project.status && project.status !== "Private" ? <span className="text-signal"> / {project.status}</span> : null}
         </p>
-        <h3 className={cn("mt-2 font-semibold text-balance", hero ? "text-[2.25rem] sm:text-[2.75rem]" : "text-2xl sm:text-[1.75rem]")}>
+        <h3
+          style={vtTitleStyle(project.slug)}
+          className={cn("mt-2 w-fit font-semibold text-balance", hero ? "text-[2.25rem] sm:text-[2.75rem]" : "text-2xl sm:text-[1.75rem]")}>
           {/* Stretched link: whole tile is clickable with a single tab stop */}
           <Link href={`/projects/${project.slug}`} className="after:absolute after:inset-0 after:content-['']">
             {project.title}
